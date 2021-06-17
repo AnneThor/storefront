@@ -35,12 +35,11 @@ function Home(props) {
         <h1>Available Products</h1>
         <div id="cards">
         {
-          prodArr.map(item => {
-            console.log(display.display.toUpperCase(), item.category)
-            if (item.category.toUpperCase() === display.display.toUpperCase()) {
+          prodArr.filter(item => item.category.toUpperCase() === display.display.toUpperCase())
+            .map(item => {
               return <MediaCard key={item.name} item={item} />
             }
-          })
+          )
         }
         </div>
         </Typography>
