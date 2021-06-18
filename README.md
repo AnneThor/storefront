@@ -12,4 +12,4 @@ Full discussion of database and endpoints is available in the server documentati
 
 ## Week 1 UML
 
-[Current Diagram of working app](./assets/week1.png)
+![Current Diagram of working app](./assets/week1.png)
