@@ -6,6 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import '../Style/Nav.css'
 
 function Nav(props) {
 
@@ -25,7 +26,7 @@ function Nav(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
 
@@ -34,6 +35,7 @@ function Nav(props) {
           <Button color="inherit">Cart</Button>
         </Toolbar>
       </AppBar>
+      <div id="spacer"></div>
     </div>
   );
 }

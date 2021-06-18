@@ -8,7 +8,7 @@ import Cart from './Components/Layout/Cart.js'
 import Home from './Components/Layout/Home.js'
 import Breadcrumb from './Components/Layout/Breadcrumb.js'
 import Nav from './Components/Layout/Nav.js'
-
+import Footer from './Components/Layout/Footer.js'
 
 function App() {
   return (
@@ -23,9 +23,9 @@ function App() {
           <Route exact path="/cart">
             <Cart />
           </Route>
-
         </Router>
       </div>
+      <Footer />
     </Provider>
   );
 }
