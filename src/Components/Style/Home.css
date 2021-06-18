@@ -3,10 +3,11 @@
   flex-direction: row;
   flex-flow: wrap;
   justify-content: space-around;
-  padding: 0 .5rem;
-
+  padding: 0 .2em;
+  align-items: space-evenly;
+  row-gap: .4em;
 }
 
 #cards children {
-  margin: .2rem .2rem;
+  margin: .2em .2em;
 }

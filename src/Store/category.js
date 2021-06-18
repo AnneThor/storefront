@@ -1,14 +1,14 @@
 // Initial State
 const initialState = {
-  display: 'home'
+  category: 'home'
 };
 
 // Reducer Function
 export default function reducer( state=initialState, action ) {
 
   switch(action.type) {
-    case 'TOGGLE_DISPLAY':
-     return { ...state, display: action.payload };
+    case 'TOGGLE_CATEGORY':
+     return { ...state, category: action.payload };
     default:
        return state
   }
@@ -17,16 +17,16 @@ export default function reducer( state=initialState, action ) {
 
 // Action Creator: A function that returns an action object
 
-export const initializeDisplay = () => {
+export const initializeCategory = () => {
   return {
-    type: 'TOGGLE_DISPLAY',
+    type: 'TOGGLE_CATEGORY',
     payload: 'home'
   }
 }
 
-export const toggleDisplay = (display) => {
+export const toggleCategory = (category) => {
   return {
-    type: 'TOGGLE_DISPLAY',
-    payload: display
+    type: 'TOGGLE_CATEGORY',
+    payload: category
   }
 }

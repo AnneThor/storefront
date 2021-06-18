@@ -1,34 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { initializeDisplay, toggleDisplay } from '../../Store/display.js'
+import { initializeCategory, toggleCategory } from '../../Store/category.js'
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Link from '@material-ui/core/Link';
 
 function Breadcrumb(props) {
 
   function handleClick(e) {
     e.preventDefault();
-    toggleDisplay(e.target.textContent)
+    toggleCategory(e.target.value)
   }
 
-  function toggleDisplay(name) {
-    props.toggleDisplay(name)
+  function toggleCategory(name) {
+    props.toggleCategory(name)
   }
 
   return (
     <Breadcrumbs aria-label="breadcrumb">
-      <Typography color="textPrimary">Browse by Category</Typography>
-      <Link color="inherit" href="/" value="food" onClick={handleClick}>
+      <Typography color="textPrimary">
+        <option value="home" onClick={handleClick} data-testid="home">Browse by Category</option>
+      </Typography>
+      <option color="inherit" value="FOOD" onClick={handleClick} data-testid="food">
         Food
-      </Link>
-      <Link color="inherit" href="/" value="housewares" onClick={handleClick}>
+      </option>
+      <option color="inherit" value="HOUSEWARES" onClick={handleClick} data-testid="housewares">
         Housewares
-      </Link>
-      <Link color="inherit" href="/" value="outdoors" onClick={handleClick}>
+      </option>
+      <option color="inherit" value="OUTDOORS" onClick={handleClick} data-testid="outdoors">
         Outdoors
-      </Link>
-
+      </option>
+      <option color="inherit" value="ALL" onClick={handleClick} data-testid="all">
+        View All
+      </option>
     </Breadcrumbs>
   );
 
@@ -38,6 +41,6 @@ const mapStateToProps = state => ({
   display: state.display
 });
 
-const mapDispatchToProps = { initializeDisplay, toggleDisplay };
+const mapDispatchToProps = { initializeCategory, toggleCategory };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Breadcrumb);
