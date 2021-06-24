@@ -1,25 +1,25 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders top level components on load', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const Nav = screen.getByTestId("Navbar");
+  expect(Nav).toBeInTheDocument();
 });
 
-test("that the proper welcome screen renders", async () => {
-    render(<App />)
+test('that we do not have products displayed on load', () => {
+  render(<App />);
+  const Home = screen.getByTestId("welcome-screen")
+  expect(Home).toBeInTheDocument();
+})
 
-    expect(screen.findByTestId("welcome-screen")).toBeInTheDocument;
-
-
-    // const container = screen.findByTestId("todo-wrapper")
-    // const list = screen.findByTestId("todo-list")
-    // const button = await screen.findByTestId("completed")
-    // fireEvent.click(button);
-    //
-    // await waitFor( async() => {
-    //   expect(button.className).toBe("btn btn-danger")
-    // })
+test('that products appear when the category is clicked', async () => {
+  render(<App />)
+  const FoodButton = screen.getByTestId("food")
+  expect(FoodButton.textContent).toBe("Food")
+  fireEvent.click(FoodButton.firstChild)
+  await waitFor( async () => {
+    expect(screen.getByTestId("available-products")).toBeInTheDocument()
+  })
 
 })

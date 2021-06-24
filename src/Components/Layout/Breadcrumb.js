@@ -8,21 +8,21 @@ function Breadcrumb(props) {
 
   function handleClick(e) {
     e.preventDefault();
-    toggleCategory(e.target.value)
+    props.toggleCategory(e.target.value)
   }
 
-  function toggleCategory(name) {
-    props.toggleCategory(name)
-  }
+  // function toggleCategory(name) {
+  //   props.toggleCategory(name)
+  // }
 
   return (
     <Breadcrumbs aria-label="breadcrumb">
       <Typography color="textPrimary">
         <option value="home" onClick={handleClick} data-testid="home">Browse by Category</option>
       </Typography>
-      <option color="inherit" value="FOOD" onClick={handleClick} data-testid="food">
+      <span data-testid="food"><option color="inherit" value="FOOD" onClick={handleClick}>
         Food
-      </option>
+      </option></span>
       <option color="inherit" value="HOUSEWARES" onClick={handleClick} data-testid="housewares">
         Housewares
       </option>
