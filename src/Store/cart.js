@@ -1,27 +1,44 @@
-const initialState = { customerId: null, items: [] };
+const initialState = { items: [] };
 
 export default function reducer(state = initialState, action) {
+
+  let itemIndex, updList;
 
   switch (action.type) {
 
     case 'ADD_ITEM':
-      let prevItems = state.items
-      let nextState = state;
-      if (prevItems.filter(item => item.name === action.payload.name).length > 0) {
-        let updItem = prevItems.filter(item => item.name === action.payload.name)[0];
-        updItem.numInCart = updItem.numInCart + 1
-        return { ...state, items: prevItems }
+      itemIndex = state.items.findIndex(item => item.name === action.payload.name)
+      if (itemIndex > -1) {
+        let currItem = state.items[itemIndex]
+        currItem.numInCart++
+        let updItems = [
+          ...state.items.slice(0, itemIndex), currItem, ...state.items.slice(itemIndex+1)
+        ]
+        return { items: updItems }
       } else {
         let newItem = action.payload
         newItem.numInCart = 1
-        nextState = [...prevItems, action.payload]
-        return { ...state, items: nextState };
+        let nextState = [...state.items, newItem]
+        return { items: nextState };
       }
 
     case 'REMOVE_ITEM':
-      let prevList = state.items
-      let updList = prevList.filter(item => item.name === !action.payload.name);
-      return { ...state, items: updList }
+      itemIndex = state.items.findIndex(item => item.name === action.payload.name)
+      updList = [
+        ...state.items.slice(0, itemIndex), ...state.items.slice(itemIndex + 1)
+      ]
+      return { items: updList }
+
+    case 'DECREMENT_ITEM':
+      itemIndex = state.items.findIndex(item => item.name === action.payload.name)
+      let updItem = state.items[itemIndex]
+      updItem.numInCart--
+      updList = [
+        ...state.items.slice(0, itemIndex),
+        updItem,
+        ...state.items.slice(itemIndex + 1)
+      ]
+      return { items: updList }
 
     case 'CLEAR':
       return initialState;
@@ -31,6 +48,13 @@ export default function reducer(state = initialState, action) {
   }
 
 };
+
+export const decrementItem = (item) => {
+  return {
+    type: 'DECREMENT_ITEM',
+    payload: item
+  }
+}
 
 export const addItems = (item) => {
   return {

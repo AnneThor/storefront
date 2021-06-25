@@ -1,9 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { connect } from 'react-redux'
-import { removeItem } from '../../Store/cart.js'
-import Button from '@material-ui/core/Button';
-
+import { removeItem, addItems, decrementItem } from '../../Store/cart.js'
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -13,15 +15,18 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '15%',
-    heidght: '80%'
+    width: '30%',
+    maxWidth: '50%',
+    height: '80%'
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
-  button: {
-  '& > *': { margin: theme.spacing(1), }
+  Button: {
+    // width: '1em',
+    // padding: '0 0'
+  // '& > *': { margin: theme.spacing(1), }
   },
 }));
 
@@ -32,10 +37,19 @@ function Cart(props) {
   const totalItemsInCart = itemsInCart.reduce((acc, item) => {
     return acc + item.numInCart
   }, 0)
-  // const itemsNumber = totalItemsInCart > 0 ? `(${totalItemsInCart})` : ''
+  const totalCost = itemsInCart.reduce((acc, item) => {
+    return acc + item.numInCart * item.price
+  }, 0)
 
-  function handleClick(item) {
-    props.removeItem(item);
+  function handleClick(item, method) {
+    if (method === "subtractAll" ||
+        (method === "subtract" && item.numInCart === 1)) {
+      props.removeItem(item);
+    } else if (method === "subtract") {
+      props.decrementItem(item)
+    } else {
+      props.addItems(item)
+    }
   }
 
   return (
@@ -51,15 +65,26 @@ function Cart(props) {
 
           { itemsInCart.map(item => {
               return <AccordionDetails key={item.name}>
-                        <Typography>{item.name} {item.numInCart}
-                        <Button className={classes.button}
-                                color="secondary"
-                                onClick={() => handleClick(item)}>X</Button>
+                        <Typography>{item.name} ({item.numInCart} x {item.price}) = ${item.numInCart * item.price}
+                          <IconButton className={classes.Button}
+                                  color="secondary" size="small"
+                                  onClick={() => handleClick(item, "subtract")}>
+                                  <ArrowDownwardIcon fontSize="inherit" />
+                          </IconButton>
+                        <IconButton className={classes.Button}
+                                color="secondary" size="small"
+                                onClick={() => handleClick(item, "add")}>
+                          <ArrowUpward fontSize="inherit" />
+                        </IconButton>
+                        <IconButton className={classes.Button} aria-label="delete" size="small"
+                                onClick={() => handleClick(item, "subtractAll")}><DeleteIcon /></IconButton>
                         </Typography>
                       </AccordionDetails>
             })
           }
-
+        <AccordionDetails>
+          <Typography>Total Items: {totalItemsInCart} Total Cost: {totalCost}</Typography>
+        </AccordionDetails>
       </Accordion>
 
     </div>
@@ -70,6 +95,6 @@ const mapStateToProps = state => ({
   items: state.cart.items
 })
 
-const mapDispatchToProps = { removeItem };
+const mapDispatchToProps = { removeItem, addItems, decrementItem };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
