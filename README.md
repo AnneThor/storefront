@@ -18,7 +18,7 @@ Full discussion of database and endpoints is available in the server documentati
 
 ## Documentation as of Week 3
 
-![Updated Diagram of Working System[(./assets/week3.png)
+![Updated Diagram of Working System](./assets/week3.png)
 
 ![Current Diagram of Working System](./assets/week1.png)
 
