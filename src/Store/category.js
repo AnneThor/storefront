@@ -8,6 +8,7 @@ export default function reducer( state=initialState, action ) {
 
   switch(action.type) {
     case 'TOGGLE_CATEGORY':
+    console.log("current category is, ", action.payload)
      return { ...state, category: action.payload };
     default:
        return state
@@ -16,13 +17,6 @@ export default function reducer( state=initialState, action ) {
 }
 
 // Action Creator: A function that returns an action object
-
-export const initializeCategory = () => {
-  return {
-    type: 'TOGGLE_CATEGORY',
-    payload: 'home'
-  }
-}
 
 export const toggleCategory = (category) => {
   return {

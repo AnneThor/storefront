@@ -21,5 +21,14 @@ test('that products appear when the category is clicked', async () => {
   await waitFor( async () => {
     expect(screen.getByTestId("available-products")).toBeInTheDocument()
   })
+})
 
+test('that product filter works appropriately', async () => {
+  render(<App />)
+  const FoodButton = screen.getByTestId("food")
+  expect(FoodButton.textContent).toBe("Food")
+  fireEvent.click(FoodButton.firstChild)
+  await waitFor( async () => {
+    expect(screen.getByTestId("card")).toBeInTheDocument();
+  })
 })
