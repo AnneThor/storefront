@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addItems } from '../../Store/cart.js'
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,14 +23,15 @@ const useStyles = makeStyles({
 });
 
 function MediaCard(props) {
+  const dispatch = useDispatch()
   const classes = useStyles();
 
+
   function handleClick(item){
-    props.addItems(item);
+    dispatch(addItems(item))
   }
 
   return (
-    <span data-testid="card">
     <Card className={classes.root} >
       <CardActionArea>
         <Unsplash width="200" height="100" keywords={props.item.name} img />
@@ -49,14 +50,7 @@ function MediaCard(props) {
         </Button>
       </CardActions>
     </Card>
-    </span>
   );
 }
 
-const mapStateToProps = state => ({
-  items: state.cart.items
-})
-
-const mapDispatchToProps = { addItems };
-
-export default connect(mapStateToProps, mapDispatchToProps)(MediaCard);
+export default MediaCard

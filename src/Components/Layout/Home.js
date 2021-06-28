@@ -11,7 +11,7 @@ import '../Style/Home.css';
 
 function Home(props) {
 
-  const product = useSelector(state => state.product.products)
+  const product = useSelector(state => state.product)
   const category = useSelector((state) => state.category)
 
 
@@ -26,7 +26,7 @@ function Home(props) {
           </Then>
           <Else>
             <h1 data-testid="available-products">Available Products</h1>
-            <div id="cards">
+            <div id="cards" data-testid="card">
               <If condition={category.category.toUpperCase() === "ALL"}>
                 <Then>
                   { product.map(item => <MediaCard key={item.name}

@@ -1,44 +1,58 @@
-const initialState = { items: [] };
+const initialState = { contents: [] };
 
 export default function reducer(state = initialState, action) {
 
-  let itemIndex, updList;
+  let itemIndex, currItem;
+  let updItem;
 
   switch (action.type) {
 
-    case 'ADD_ITEM':
-      itemIndex = state.items.findIndex(item => item.name === action.payload.name)
+    case 'product/added':
+      currItem = action.payload.updItem
+      itemIndex = state.contents.findIndex(item => item.name === currItem.name);
       if (itemIndex > -1) {
-        let currItem = state.items[itemIndex]
-        currItem.numInCart++
-        let updItems = [
-          ...state.items.slice(0, itemIndex), currItem, ...state.items.slice(itemIndex+1)
+        updItem = state.contents[itemIndex]
+        updItem.numInCart = updItem.numInCart + 1
+        let contents = [
+          ...state.contents.slice(0, itemIndex), updItem, ...state.contents.slice(itemIndex+1)
         ]
-        return { items: updItems }
+        return { contents }
       } else {
-        let newItem = action.payload
-        newItem.numInCart = 1
-        let nextState = [...state.items, newItem]
-        return { items: nextState };
+        currItem.numInCart = 1
+        return { contents: [...state.contents, currItem] }
       }
 
-    case 'REMOVE_ITEM':
-      itemIndex = state.items.findIndex(item => item.name === action.payload.name)
-      updList = [
-        ...state.items.slice(0, itemIndex), ...state.items.slice(itemIndex + 1)
-      ]
-      return { items: updList }
+    case 'ADD_ITEM':
+      currItem = action.payload
+      itemIndex = state.contents.findIndex(item => item.name === currItem.name);
+      if (itemIndex > -1) {
+        updItem = state.contents[itemIndex]
+        updItem.numInCart++
+        return { contents: [
+          ...state.contents.slice(0, itemIndex), updItem, ...state.contents.slice(itemIndex+1)
+        ] }
+      } else {
+        currItem.numInCart = 1
+        return { contents: [...state.contents, currItem] }
+      }
 
-    case 'DECREMENT_ITEM':
-      itemIndex = state.items.findIndex(item => item.name === action.payload.name)
-      let updItem = state.items[itemIndex]
-      updItem.numInCart--
-      updList = [
-        ...state.items.slice(0, itemIndex),
+    case 'product/deleted':
+      currItem = action.payload.updItem
+      itemIndex = state.contents.findIndex(item => item.name === currItem.name);
+      return { contents: [
+        ...state.contents.slice(0, itemIndex), ...state.contents.slice(itemIndex + 1)
+      ] }
+
+    case 'product/subtracted':
+      currItem = action.payload.updItem
+      itemIndex = state.contents.findIndex(item => item.name === currItem.name);
+      updItem = state.contents[itemIndex]
+      updItem.numInCart = updItem.numInCart - 1
+      return { contents: [
+        ...state.contents.slice(0, itemIndex),
         updItem,
-        ...state.items.slice(itemIndex + 1)
-      ]
-      return { items: updList }
+        ...state.contents.slice(itemIndex + 1)
+      ] }
 
     case 'CLEAR':
       return initialState;
@@ -58,8 +72,8 @@ export const decrementItem = (item) => {
 
 export const addItems = (item) => {
   return {
-    type: 'ADD_ITEM',
-    payload: item
+    type: 'product/added',
+    payload: {updItem: item}
   }
 }
 

@@ -1,19 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import { initializeCategory, toggleCategory } from '../../Store/category.js'
+import { useDispatch } from 'react-redux'
+import { toggleCategory } from '../../Store/category.js'
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 function Breadcrumb(props) {
 
+  const dispatch = useDispatch()
+
   function handleClick(e) {
     e.preventDefault();
-    props.toggleCategory(e.target.value)
+    dispatch(toggleCategory(e.target.value))
   }
-
-  // function toggleCategory(name) {
-  //   props.toggleCategory(name)
-  // }
 
   return (
     <Breadcrumbs aria-label="breadcrumb">
@@ -37,10 +35,4 @@ function Breadcrumb(props) {
 
 }
 
-const mapStateToProps = state => ({
-  display: state.display
-});
-
-const mapDispatchToProps = { initializeCategory, toggleCategory };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Breadcrumb);
+export default Breadcrumb
