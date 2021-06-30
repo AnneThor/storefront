@@ -16,7 +16,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '30%',
     maxWidth: '50%',
-    height: '80%'
+    height: '100%',
+    position: 'absolute',
+    right: '0',
+    top: '0',
+    padding: '10px 10px'
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
