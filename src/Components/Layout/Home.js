@@ -18,7 +18,7 @@ function Home(props) {
       <CssBaseline />
       <Container maxWidth="lg">
         <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} >
-        <If condition={category.category==="home"}>
+        <If condition={category==="home"}>
           <Then>
             <h1 data-testid="welcome-screen">Welcome to the Virtual Storefront</h1>
           </Then>
