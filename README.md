@@ -16,6 +16,10 @@ When items are added the cart, their inventory is decreased remotely (and vice v
 
 Full discussion of database and endpoints is available in the server documentation.
 
+## Week 4 Updates 
+
+Transitioned to a redux store using Redux Toolkit, the basic functionality of the app remains the same. 
+
 ## Documentation as of Week 3
 
 ![Updated Diagram of Working System](./assets/week3.png)
