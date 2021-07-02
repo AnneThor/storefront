@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux'
-import { toggleCategory } from '../../Store/category.js'
+import { toggleCategory } from '../../Store-rtk/category-slice.js'
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 

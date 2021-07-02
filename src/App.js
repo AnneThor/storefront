@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
 import { Provider } from 'react-redux';
-import store from './Store/index.js'
-import { fetchProducts } from './Store/product.js'
-
+import store from './Store-rtk/index.js'
+import { fetchProducts } from './Store-rtk/product-slice.js'
 import './App.css';
 import Cart from './Components/Layout/Cart.js'
 import Home from './Components/Layout/Home.js'
@@ -14,9 +12,8 @@ import Footer from './Components/Layout/Footer.js'
 
 function App() {
 
-
   useEffect(() => {
-    store.dispatch(fetchProducts)
+    store.dispatch(fetchProducts())
   }, [])
 
   return (

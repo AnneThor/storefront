@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { updateProduct } from '../../Store/product.js'
+import { adjustProduct } from '../../Store-rtk/product-slice.js'
+import { adjust, remove } from '../../Store-rtk/cart-slice.js'
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
@@ -10,7 +11,6 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,16 +26,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
-  Button: {
-    // width: '1em',
-    // padding: '0 0'
-  // '& > *': { margin: theme.spacing(1), }
-  },
+  Button: {},
 }));
 
 function Cart(props) {
   const classes = useStyles();
-  const itemsInCart = useSelector(state => state.cart.contents)
+  const itemsInCart = useSelector(state => state.cart)
   const totalItemsInCart = itemsInCart.reduce((acc, item) => {
     return acc + item.numInCart
   }, 0)
@@ -45,8 +41,13 @@ function Cart(props) {
 
   const dispatch = useDispatch()
 
-  function handleClick(item, action) {
-    dispatch(updateProduct(item, action))
+  function handleClick(item, method) {
+    dispatch(adjustProduct({ item, method }))
+    if (method === "subtractAll") {
+      dispatch(remove({ item, method }))
+    } else {
+      dispatch(adjust({ item, method }))
+    }
   }
 
   return (
