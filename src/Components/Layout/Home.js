@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
-
 import { If, Then, Else } from 'react-if';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -14,7 +13,6 @@ function Home(props) {
   const product = useSelector(state => state.product)
   const category = useSelector((state) => state.category)
 
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -27,7 +25,7 @@ function Home(props) {
           <Else>
             <h1 data-testid="available-products">Available Products</h1>
             <div id="cards" data-testid="card">
-              <If condition={category.category.toUpperCase() === "ALL"}>
+              <If condition={category.toUpperCase() === "ALL"}>
                 <Then>
                   { product.map(item => <MediaCard key={item.name}
                                                    item={item}
@@ -35,7 +33,7 @@ function Home(props) {
                 </Then>
                 <Else>
                   {
-                    product.filter(item => item.category === category.category.toUpperCase())
+                    product.filter(item => item.category === category.toUpperCase())
                       .map(item => <MediaCard key={item.name}
                                               item={item}
                                               data-testid="filter-item"/>)

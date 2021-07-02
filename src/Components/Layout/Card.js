@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux'
-import { addItems } from '../../Store/cart.js'
+import { adjustProduct } from '../../Store-rtk/product-slice.js'
+import { adjust } from '../../Store-rtk/cart-slice.js'
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -26,9 +27,9 @@ function MediaCard(props) {
   const dispatch = useDispatch()
   const classes = useStyles();
 
-
-  function handleClick(item){
-    dispatch(addItems(item))
+  function handleClick(item, method){
+    dispatch(adjustProduct({ item, method }))
+    dispatch(adjust({ item, method }))
   }
 
   return (
@@ -42,7 +43,7 @@ function MediaCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <IconButton size="small" color="primary" onClick={() => handleClick(props.item)}>
+        <IconButton size="small" color="primary" onClick={() => handleClick(props.item, "add")}>
           ${props.item.price} <ShoppingCart fontSize="inherit"/>
         </IconButton>
         <Button size="small" color="primary">
